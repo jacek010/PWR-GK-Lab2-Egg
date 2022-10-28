@@ -20,7 +20,7 @@ point3 punkty[N][N];
 
 #define PI 3.14159265358979323846
 
-int model = 1;  // 1- punkty, 2- siatka, 3 - trójkąty
+int model = 1;  // 1- punkty, 2- siatka, 3 - trójkąty, 4 - czajnik solid, 5 - czajnik siatka
 
 static GLfloat theta[] = { 0.0, 0.0, 0.0 }; // trzy kąty obrotu
 
@@ -259,7 +259,10 @@ void Egg()
         triangleEgg();
         break;
     case 4:
-        randomColors();
+        glutSolidTeapot(3.0);
+        break;
+    case 5:
+        glutWireTeapot(3.0);
     }
 
 }
@@ -284,7 +287,6 @@ void RenderScene(void)
     glRotatef(theta[1], 0.0, 1.0, 0.0);
 
     glRotatef(theta[2], 0.0, 0.0, 1.0);
-  
     Egg();//funkcja rysująca jajko
 
     glFlush();
@@ -311,11 +313,17 @@ void printMenu()
     cout << "\t 'b' - blue " << endl;
     cout << "\t 'w' - white " << endl;
     cout << "Zarzadzaj predkoscia rotacji:" << endl;
+    cout << "\t '-' - zwolnij rotacje" << endl;
+    cout << "\t '=' - przyspiesz rotacje" << endl;
     cout << "\t '0' - brak rotacji" << endl;
     cout << "\t '1' - wolno" << endl;
     cout << "\t '2' - szypko" << endl;
-    cout << "\t '3' - szypciej " << endl;
+    cout << "\t '3' - szypko szybko " << endl;
     cout << "\t '4' - najszypciej (naprawde to jest bardzo szypko, do zestawu proponujemy trzymac potem wcisniety klawisz 'c') " << endl;
+
+    cout << "\n\nFunkcje extra dodatkowe:" << endl;
+    cout << "\t 'z' - czajnik pelny" << endl;
+    cout << "\t 'x' - czajnik z siatki" << endl;
 }
 
 //funkcja wywołuje odpowiednie funkcje w zależnośći od naciśniętego klawisza
@@ -334,6 +342,14 @@ void keys(unsigned char key, int x, int y)
     if (key == '2') changeSpeed(0.2);
     if (key == '3') changeSpeed(2.0);
     if (key == '4') changeSpeed(5.0);
+    if (key == '=') changeSpeed(rotateSpeed += 0.05);
+    if (key == '-')
+    {
+        if (rotateSpeed<=0.1) changeSpeed(0.0);
+        else changeSpeed(rotateSpeed -= 0.05);
+    }
+    if (key == 'z') model = 4;
+    if (key == 'x') model = 5;
 
     RenderScene(); // przerysowanie obrazu sceny
 }
