@@ -26,11 +26,14 @@ static GLfloat theta[] = { 0.0, 0.0, 0.0 }; // trzy kąty obrotu
 
 float rotateSpeed = 0.05;
 
-float kolor()//funkcja generuje losową wartość do użycia przy wyborze koloru
+
+//funkcja generuje losową wartość do użycia przy wyborze koloru
+float kolor()
 {
     return float(rand() % 101) / 100;
 }
 
+//funkcja wypełnia całą tabelę dwuwymiarową punktów losowymi kolorami
 void randomColors()
 {
     for (int i = 0; i < N; i++)
@@ -44,6 +47,7 @@ void randomColors()
     }
 }
 
+//funkcja odpowiada za ustawienie jednolitego koloru
 void oneColor(int color)
 {
     for (int i = 0; i < N; i++)
@@ -78,6 +82,7 @@ void oneColor(int color)
     }
 }
 
+//funkcja zmienia kąt położenia jajka
 void spinEgg()
 {
 
@@ -93,6 +98,7 @@ void spinEgg()
     glutPostRedisplay(); //odświeżenie zawartości aktualnego okna
 }
 
+//funkcja zmienia prędkość rotacji jajka
 void changeSpeed(float speed)
 {
     rotateSpeed = speed;
@@ -101,9 +107,6 @@ void changeSpeed(float speed)
 /*************************************************************************************/
 
 // Funkcja rysująca osie układu współrzędnych
-
-
-
 void Axes(void)
 {
 
@@ -141,6 +144,7 @@ void Axes(void)
 }
 
 
+//rysowanie jajka z punktów
 void pointEgg()
 {
     //narysowanie punktów
@@ -156,6 +160,7 @@ void pointEgg()
 }
 
 
+//rysownaie jajka z siatki (linii)
 void lineEgg()
 {
     //narysowanie linii
@@ -183,6 +188,7 @@ void lineEgg()
 }
 
 
+//rysowanie jajka z pełnym płaszczem
 void triangleEgg()
 {
     //narysowanie trójkątów
@@ -258,6 +264,7 @@ void Egg()
 
 }
 
+//Funkcja przerysowuje scenę
 void RenderScene(void)
 {
 
@@ -270,13 +277,13 @@ void RenderScene(void)
     // Narysowanie osi przy pomocy funkcji zdefiniowanej wyżej
     glColor3f(colors[1][1][0], colors[1][1][1], colors[1][1][2]); // Ustawienie koloru rysowania na biały
 
+
+    //fragment odpowiadający za rotowanie obrazu
     glRotatef(theta[0], 1.0, 0.0, 0.0);
 
     glRotatef(theta[1], 0.0, 1.0, 0.0);
 
     glRotatef(theta[2], 0.0, 0.0, 1.0);
-
-    //glutWireTeapot(3.0); // Narysowanie obrazu czajnika do herbaty
   
     Egg();//funkcja rysująca jajko
 
@@ -288,6 +295,7 @@ void RenderScene(void)
     //
 }
 
+//funkcja wypisuje w konsoli menu aby użytkownik wiedział co robić
 void printMenu()
 {
     cout << "Niech moc jajeCZKA bedzie z Toba" << endl;
@@ -310,6 +318,7 @@ void printMenu()
     cout << "\t '4' - najszypciej (naprawde to jest bardzo szypko, do zestawu proponujemy trzymac potem wcisniety klawisz 'c') " << endl;
 }
 
+//funkcja wywołuje odpowiednie funkcje w zależnośći od naciśniętego klawisza
 void keys(unsigned char key, int x, int y)
 {
     if (key == 'p') model = 1;
@@ -328,6 +337,8 @@ void keys(unsigned char key, int x, int y)
 
     RenderScene(); // przerysowanie obrazu sceny
 }
+
+
 
 void MyInit(void)
 {
